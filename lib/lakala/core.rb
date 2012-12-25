@@ -2,8 +2,13 @@
 module Lakala
   # Core
   module ClassUtilMixin
+
+    def self.included(base) 
+      base.send :extend, ClassMethods
+      base.send :include, InstanceMethods
+    end
+
     module ClassMethods
-      
     end
     
     module InstanceMethods
@@ -16,7 +21,6 @@ module Lakala
             others[key] = val
           end
         end
-        self.send("raw=",params)
         self.send("#{:other_attrs}=", others) if self.respond_to? :other_attrs and others.size > 0
         self.send(:init) if self.respond_to? :init
       end        
