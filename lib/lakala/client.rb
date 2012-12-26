@@ -57,6 +57,7 @@ module Lakala
     #  :orderid => "your order id", 
     #  :merurl=> "your website's url when lakala pay success"
     #)
+    #
     def redirect_to_lakala_gateway(options={})
       #验证参数
       validate_client_params
@@ -115,8 +116,11 @@ module Lakala
     #  :order_date=>Time.now.strftime("%Y%m%d")
     #})
     #
-    #根据@lakala_query_result[:connection]判断是否查询成功;
-    #如果成功,根据@lakala_query_result[:result]、@lakala_query_result[:order_id]、@lakala_query_result[:amount]分别获得查询结果状态、订单编号、金额(分).
+    #返回:
+    #  @lakala_query_result.connection (判断是否查询成功)
+    #  @lakala_query_result.result (Y---支付成功   F—支付未成功 N –订单不存在)
+    #  @lakala_query_result.order_id (订单编号)
+    #  @lakala_query_result.amount (金额,单位:分)
     #
     def http_get_single_query_string(options={})
       #验证参数
@@ -149,9 +153,13 @@ module Lakala
 
       #验证签字
       if verify_string==signature
-        {:connection=>true,:result=>return_array[8-1],:order_id=>return_array[6-1],:amount=>return_array[2-1]}        
+        Lakala::Query.new({:connection=>true,
+                          :result=>return_array[8-1],
+                          :order_id=>return_array[6-1],
+                          :amount=>return_array[2-1]}
+                         )      
       else
-        {:connection=>false}          
+        Lakala::Query.new({:connection=>false})     
       end
     end
 
