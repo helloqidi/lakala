@@ -5,9 +5,13 @@ module Lakala
     include ClassUtilMixin
     #类常量
     @@ATTRIBUTES = [
+      #版本号
       :ver,
+      #失效时间(分钟)
       :expiredtime,
+      #快捷账单号支付url
       :pay_url,
+      #单笔查询url
       :query_url
     ]
    
