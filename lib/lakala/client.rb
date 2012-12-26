@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 require 'digest/md5'
+require 'uri'
+require 'net/http'
 
 module Lakala
 
