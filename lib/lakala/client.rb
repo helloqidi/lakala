@@ -33,7 +33,10 @@ module Lakala
     #类方法
     #使用：
     #Lakala::Client.configure do |conf|
-    #  conf.ver=''
+    #  conf.ver=""
+    #  conf.expiredtime=1440*2
+    #  pay_url=""
+    #  query_url=""
     #end
     #可改变类变量@@config的值,如果不改变，则默认通过@@defaults获得默认值
     #
@@ -50,13 +53,13 @@ module Lakala
     #
     #使用：
     #@client=Lakala::Client.new({:merid=>"",:mincode=>"",:minpswd=>""})
-    #@lakala_pay_url=@client.redirect_to_lakala_gateway(
+    #@lakala_pay_url=@client.redirect_to_lakala_gateway({
     #  :productname => "product name", 
     #  :desc => "product desc", 
     #  :amount => 100, 
     #  :orderid => "your order id", 
     #  :merurl=> "your website's url when lakala pay success"
-    #)
+    #})
     #
     def redirect_to_lakala_gateway(options={})
       #验证参数
