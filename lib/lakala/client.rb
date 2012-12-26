@@ -3,6 +3,7 @@
 require 'digest/md5'
 require 'uri'
 require 'net/http'
+require 'cgi'
 
 module Lakala
 
