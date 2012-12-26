@@ -21,10 +21,10 @@ then, run bundle:
 *2,you can modify config
 ```
   Lakala::Client.configure do |conf|
-    conf.ver="20060301",
-    conf.expiredtime=1440,
-    pay_url="http://www.paygate.cn/MerchantPlugin3/BillNoGenServlet"
-    query_url="http://pgs.lakala.com.cn/tradeSearch/ndsinglesearch"
+    conf.ver="20060301"
+    conf.expiredtime=1440
+    conf.pay_url="http://www.paygate.cn/MerchantPlugin3/BillNoGenServlet"
+    conf.query_url="http://pgs.lakala.com.cn/tradeSearch/ndsinglesearch"
   end
 ```
 
