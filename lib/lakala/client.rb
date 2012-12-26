@@ -6,9 +6,13 @@ module Lakala
   class Client
     include ClassUtilMixin
 
+
+    protected
     #merid:商户号; mincode:固定账单号; minpswd:商户密码
     attr_accessor :merid, :mincode, :minpswd
 
+
+    public
     #类变量
     @@defaults = {
       :ver => "20060301",
@@ -121,7 +125,7 @@ module Lakala
         :amount=>return_array[2-1],
         #Y---支付成功   F—支付未成功 N –订单不存在
         :result=>return_array[8-1],
-        :mer_key=>Settings.lakala.minpswd.to_s
+        :mer_key=>self.minpswd.to_s
       }
       #重新加密
       sign_string=sign_hash.collect{|key,value| "#{key}=#{value}"}.join("&")
@@ -136,25 +140,23 @@ module Lakala
     end
 
 
-
     private
-
     ##
     #拉卡拉单笔查询的url,根据其指定格式形成url.
     #
     def redirect_to_single_query(options={})
       query_hash = {
         #版本号
-        :ver_id=>Settings.lakala.ver.to_s,
+        :ver_id=>@@config.ver.to_s,
         #商户号
-        :mer_id=>Settings.lakala.merid.to_s,
+        :mer_id=>self.merid.to_s,
         #订单的创建时间,格式:YYYYMMDD
         :order_date=>options[:order_date].to_s,
         :order_id=>options[:order_id].to_s,        
         #加密类型MD5
         :mac_type=>"2",
         #密码
-        :mer_key=>Settings.lakala.minpswd.to_s
+        :mer_key=>self.minpswd.to_s
       }
 
       sign_string=query_hash.collect{|key,value| "#{key}=#{value}"}.join("&")
