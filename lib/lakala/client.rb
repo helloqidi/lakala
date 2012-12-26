@@ -59,7 +59,7 @@ module Lakala
     #)
     def redirect_to_lakala_gateway(options={})
       #验证参数
-      self.validate_client_params
+      validate_client_params
 
       query_hash = {
         #版本号
@@ -120,7 +120,7 @@ module Lakala
     #
     def http_get_single_query_string(options={})
       #验证参数
-      self.validate_client_params
+      validate_client_params
 
       #进行http链接,获得返回的response
       res=http_connect_lakala(redirect_to_single_query(options))
