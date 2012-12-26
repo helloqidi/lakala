@@ -1,7 +1,8 @@
 # encoding: utf-8
 module Lakala
 
-  #@client=Lakala::Client.new(params)
+  #使用:
+  #@client=Lakala::Client.new({:merid=>"",:mincode=>"",minpswd=>""})
   class Client
     include ClassUtilMixin
 
@@ -26,7 +27,8 @@ module Lakala
     @@config = Lakala::Config.new(@@defaults)
 
     #类方法
-    #可通过Lakala::Client.configure do |conf|;conf.ver='';end 的方式调用,改变默认值@@config通过@@defaults获得的默认值
+    #使用：
+    #Lakala::Client.configure do |conf|;conf.ver='';end,改变类变量@@config的值,如果不改变，则默认通过@@defaults获得默认值
     class << self
       def configure(&block)
         raise ArgumentError, "Block must be provided to configure" unless block_given?
