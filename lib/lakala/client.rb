@@ -1,4 +1,7 @@
 # encoding: utf-8
+
+require 'digest/md5'
+
 module Lakala
 
   #使用:
