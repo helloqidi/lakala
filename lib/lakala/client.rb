@@ -1,9 +1,9 @@
 # encoding: utf-8
-
 require 'digest/md5'
 require 'uri'
 require 'net/http'
 require 'cgi'
+
 
 module Lakala
 
@@ -32,7 +32,11 @@ module Lakala
 
     #类方法
     #使用：
-    #Lakala::Client.configure do |conf|;conf.ver='';end,改变类变量@@config的值,如果不改变，则默认通过@@defaults获得默认值
+    #Lakala::Client.configure do |conf|
+    #  conf.ver=''
+    #end
+    #可改变类变量@@config的值,如果不改变，则默认通过@@defaults获得默认值
+    #
     class << self
       def configure(&block)
         raise ArgumentError, "Block must be provided to configure" unless block_given?
@@ -50,10 +54,13 @@ module Lakala
     #  :productname => "product name", 
     #  :desc => "product desc", 
     #  :amount => 100, 
-    #  :orderid => "order id", 
+    #  :orderid => "your order id", 
     #  :merurl=> "your website's url when lakala pay success"
     #)
     def redirect_to_lakala_gateway(options={})
+      #验证参数
+      self.validate_client_params
+
       query_hash = {
         #版本号
         :ver=>@@config.ver.to_s,
@@ -104,7 +111,7 @@ module Lakala
     #使用:
     #@client=Lakala::Client.new({:merid=>"",:mincode=>"",:minpswd=>""})
     #@lakala_query_result=@client.http_get_single_query_string({
-    #  :order_id=>"order id",
+    #  :order_id=>"your order id",
     #  :order_date=>Time.now.strftime("%Y%m%d")
     #})
     #
@@ -112,6 +119,9 @@ module Lakala
     #如果成功,根据@lakala_query_result[:result]、@lakala_query_result[:order_id]、@lakala_query_result[:amount]分别获得查询结果状态、订单编号、金额(分).
     #
     def http_get_single_query_string(options={})
+      #验证参数
+      self.validate_client_params
+
       #进行http链接,获得返回的response
       res=http_connect_lakala(redirect_to_single_query(options))
 
@@ -204,6 +214,17 @@ module Lakala
       if !response.is_a?(Net::HTTPSuccess)
         raise "get lakala response frm Net::HTTP fail"
       end
+    end
+
+    #
+    #验证client是否缺少参数
+    #
+    def validate_client_params
+      ["merid","mincode","minpswd"].each do |method|
+        unless self.respond_to?(method)
+          raise "Need param:#{method} for client."
+        end
+      end 
     end
 
   end#Client class
