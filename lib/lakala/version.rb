@@ -1,4 +1,4 @@
 # encoding: utf-8
 module Lakala
-  VERSION = "0.0.2.17"
+  VERSION = "0.0.2.19"
 end

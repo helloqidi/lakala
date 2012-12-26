@@ -1,6 +1,7 @@
 # encoding: utf-8
 module Lakala
 
+  #单笔查询返回的结果
   class Query
     include ClassUtilMixin
 
