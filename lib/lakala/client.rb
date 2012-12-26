@@ -2,15 +2,13 @@
 module Lakala
 
   #使用:
-  #@client=Lakala::Client.new({:merid=>"",:mincode=>"",minpswd=>""})
+  #@client=Lakala::Client.new({:merid=>"",:mincode=>"",:minpswd=>""})
   class Client
     include ClassUtilMixin
 
-    #私有方法
-    protected
+    #merid:商户号; mincode:固定账单号; minpswd:商户密码
     attr_accessor :merid, :mincode, :minpswd
 
-    public
     #类变量
     @@defaults = {
       :ver => "20060301",
@@ -37,7 +35,7 @@ module Lakala
     #返回拉卡拉快捷账单号支付url,根据其指定格式形成url.
     #
     #使用：
-    #@client=Lakala::Client.new({:merid=>"",:mincode=>"",minpswd=>""})
+    #@client=Lakala::Client.new({:merid=>"",:mincode=>"",:minpswd=>""})
     #@lakala_pay_url=@client.redirect_to_lakala_gateway(
     #  :productname => "product name", 
     #  :desc => "product desc", 
@@ -94,7 +92,7 @@ module Lakala
     #请求拉卡拉单笔查询,获得返回的文本
     #
     #使用:
-    #@client=Lakala::Client.new({:merid=>"",:mincode=>"",minpswd=>""})
+    #@client=Lakala::Client.new({:merid=>"",:mincode=>"",:minpswd=>""})
     #@lakala_query_result=@client.http_get_single_query_string({
     #  :order_id=>"order id",
     #  :order_date=>Time.now.strftime("%Y%m%d")
@@ -138,6 +136,9 @@ module Lakala
     end
 
 
+
+    private
+
     ##
     #拉卡拉单笔查询的url,根据其指定格式形成url.
     #
@@ -170,8 +171,6 @@ module Lakala
       redirect_string="http://pgs.lakala.com.cn/tradeSearch/ndsinglesearch?" + query_string
       URI.escape(redirect_string)
     end
-
-    private
 
     ##
     #进行http链接,获得返回的response
