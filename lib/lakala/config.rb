@@ -3,7 +3,7 @@ module Lakala
 
   class Config
     include ClassUtilMixin
-    #类常量
+    #类变量
     @@ATTRIBUTES = [
       #版本号
       :ver,
