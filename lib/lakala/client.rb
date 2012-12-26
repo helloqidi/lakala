@@ -221,7 +221,8 @@ module Lakala
     #
     def validate_client_params
       ["merid","mincode","minpswd"].each do |method|
-        unless self.respond_to?(method)
+        value=self.send(method)
+        if value.nil?
           raise "Need param:#{method} for client."
         end
       end 
